@@ -1,4 +1,23 @@
 <?php
+
+/*
+ * CrateSystem, a public plugin for crates for PocketMine-MP
+ * Copyright (C) 2017-2018 CLADevs
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY;  without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 declare(strict_types=1);
 
 namespace CrateSystem\commands;
@@ -22,7 +41,7 @@ class KeyCommand extends BaseCommand{
     public function __construct(Main $main){
         parent::__construct("key", $main);
         $this->main = $main;
-        $this->setDescription("Key Command.");
+        $this->setDescription("Check player key.");
     }
 
     /**
@@ -32,42 +51,50 @@ class KeyCommand extends BaseCommand{
      * @return bool
      */
     public function execute(CommandSender $sender, string $commandLabel, array $args) : bool{
-        $usage = "Usage: /key <player> <key> <amount>";
+        if(!isset($args[0])){
+            if(!$sender instanceof Player){
+                $sender->sendMessage("Usage: /key <player>");
+                return false;
+            }
+            $this->cfg = $this->getMain()->getPlayerCfg($sender);
 
-        if(!$sender->hasPermission("cratesystem.key")){
-            $sender->sendMessage(new TranslationContainer(C::RED . "%commands.generic.permission"));
-            return false;
-        }
+            $this->common = $this->cfg->get("Common");
+            $this->vote = $this->cfg->get("Vote");
+            $this->rare = $this->cfg->get("Rare");
+            $this->legendary = $this->cfg->get("Legendary");
 
-        if(count($args) < 1){
-            $sender->sendMessage($usage);
-            return false;
-        }
-
-        if(!isset($args[1])){
-            $sender->sendMessage($usage);
+            $sender->sendMessage(
+                C::WHITE . "====>" . C::BLUE . "Your Crates" . C::WHITE . "<====" . "\n" . 
+                C::GREEN . "Common " . C::YELLOW . $this->common . "\n" . 
+                C::RED . "Vote " . C::YELLOW . $this->vote . "\n" . 
+                C::GOLD . "Rare " . C::YELLOW . $this->rare . "\n" . 
+                C::AQUA . "Legendary " . C::YELLOW . $this->legendary
+            );
             return false;
         }
 
         $player = $this->getServer()->getPlayerExact($args[0]);
-        if(!$player instanceof Player){
-            if($player instanceof ConsoleCommandSender){
-                $sender->sendMessage(C::RED . "Please provide a player.");
+
+        if(isset($args[0])){
+            if($player instanceof Player){
+                $this->cfg = $this->getMain()->getPlayerCfg($player);
+
+                $this->common = $this->cfg->get("Common");
+                $this->vote = $this->cfg->get("Vote");
+                $this->rare = $this->cfg->get("Rare");
+                $this->legendary = $this->cfg->get("Legendary");
+
+                $player->sendMessage(
+                    C::WHITE . "====>" . C::BLUE . "{$player->getName()}'s Crates" . C::WHITE . "<====" . "\n" . 
+                    C::GREEN . "Common " . C::YELLOW . $this->common . "\n" . 
+                    C::RED . "Vote " . C::YELLOW . $this->vote . "\n" . 
+                    C::GOLD . "Rare " . C::YELLOW . $this->rare . "\n" . 
+                    C::AQUA . "Legendary " . C::YELLOW . $this->legendary
+                );
+            }else{
+                $sender->sendMessage(C::RED . "$args[0] player cannot be found.");
                 return false;
             }
-            $sender->sendMessage(C::RED . "$args[0] player cannot be found.");
-            return false;
-        }
-
-        if($args[1] == in_array($args[1], ["Common", "Vote", "Rare", "Legendary"])){
-            $this->cfg = $this->getMain()->getPlayerCfg($player);
-            $this->cfg->set($args[1], $args[2]);
-            $this->cfg->save();
-            $sender->sendMessage(C::GREEN . "Successfully Gave {$player->getName()} $args[2] $args[1] Crate!");
-            $player->sendMessage(C::YELLOW . "You now have $args[2] $args[1] Crate.");
-        }else{
-            $sender->sendMessage(C::RED . "Could'nt found Crate $args[1]");
-            return false;
         }
         return true;
     }
