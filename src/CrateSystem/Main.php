@@ -25,7 +25,7 @@ namespace CrateSystem;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\{
-    Config, TextFormat as C
+    Config, TextFormat
 };
 
 use CrateSystem\commands\CommandManager;
@@ -40,7 +40,7 @@ class Main extends PluginBase{
     public function onEnable() : void{
         if($this->checkDepends()) return;
         $this->registerManager();
-        $this->getLogger()->info(C::GREEN . "CrateSystem has been loaded!");
+        $this->getLogger()->info(TextFormat::GREEN . "CrateSystem has been loaded!");
     }
 
     public function registerManager() : void{

@@ -27,7 +27,7 @@ use pocketmine\Player;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\TranslationContainer;
 use pocketmine\utils\Config;
-use pocketmine\utils\TextFormat as C;
+use pocketmine\utils\TextFormat;
 
 use CrateSystem\Main;
 
@@ -69,22 +69,22 @@ class SetKeyCommand extends BaseCommand{
         }
 
         if(!is_numeric($args[2])){
-            $sender->sendMessage(C::RED . "Please use number.");
+            $sender->sendMessage(TextFormat::RED . "Please use number.");
             return false;
         }
 
         if($args[2] < 0){
-            $sender->sendMessage(C::RED . "$args[2] is a invalid number.");
+            $sender->sendMessage(TextFormat::RED . "$args[2] is a invalid number.");
             return false;
         }
 
         $player = $this->getServer()->getPlayerExact($args[0]);
         if(!$player instanceof Player){
             if($player instanceof ConsoleCommandSender){
-                $sender->sendMessage(C::RED . "Please provide a player.");
+                $sender->sendMessage(TextFormat::RED . "Please provide a player.");
                 return false;
             }
-            $sender->sendMessage(C::RED . "$args[0] player cannot be found.");
+            $sender->sendMessage(TextFormat::RED . "$args[0] player cannot be found.");
             return false;
         }
 
@@ -92,9 +92,9 @@ class SetKeyCommand extends BaseCommand{
             $this->cfg = $this->getMain()->getPlayerCfg($player);
             $this->cfg->set($args[1], $args[2]);
             $this->cfg->save();
-            $sender->sendMessage(C::GREEN . "Successfully Set {$player->getName()} $args[2] $args[1] Crate Key!");
+            $sender->sendMessage(TextFormat::GREEN . "Successfully Set {$player->getName()} $args[2] $args[1] Crate Key!");
         }else{
-            $sender->sendMessage(C::RED . "Could'nt found Crate $args[1]");
+            $sender->sendMessage(TextFormat::RED . "Could'nt found Crate $args[1]");
             return false;
         }
         return true;

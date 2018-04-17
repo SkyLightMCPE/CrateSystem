@@ -25,7 +25,7 @@ namespace CrateSystem\commands;
 use pocketmine\Player;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\{
-    Config, TextFormat as C
+    Config, TextFormat
 };
 
 use CrateSystem\crates\UIManager;
@@ -61,7 +61,7 @@ class CrateCommand extends BaseCommand{
         $this->UIManager = new UIManager($this->getMain());
 
         if(!$sender instanceof Player){
-            $sender->sendMessage(C::RED . "Please use this command ingame.");
+            $sender->sendMessage(TextFormat::RED . "Please use this command ingame.");
             return false;
         }
 

@@ -27,7 +27,7 @@ use pocketmine\Player;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\TranslationContainer;
 use pocketmine\utils\Config;
-use pocketmine\utils\TextFormat as C;
+use pocketmine\utils\TextFormat;
 
 use CrateSystem\Main;
 
@@ -64,11 +64,11 @@ class KeyCommand extends BaseCommand{
             $this->legendary = $this->cfg->get("Legendary");
 
             $sender->sendMessage(
-                C::WHITE . "====>" . C::BLUE . "Your Crates" . C::WHITE . "<====" . "\n" . 
-                C::GREEN . "Common " . C::YELLOW . $this->common . "\n" . 
-                C::RED . "Vote " . C::YELLOW . $this->vote . "\n" . 
-                C::GOLD . "Rare " . C::YELLOW . $this->rare . "\n" . 
-                C::AQUA . "Legendary " . C::YELLOW . $this->legendary
+                TextFormat::WHITE . "====>" . TextFormat::BLUE . "Your Crates" . TextFormat::WHITE . "<====" . "\n" . 
+                TextFormat::GREEN . "Common " . TextFormat::YELLOW . $this->common . "\n" . 
+                TextFormat::RED . "Vote " . TextFormat::YELLOW . $this->vote . "\n" . 
+                TextFormat::GOLD . "Rare " . TextFormat::YELLOW . $this->rare . "\n" . 
+                TextFormat::AQUA . "Legendary " . TextFormat::YELLOW . $this->legendary
             );
             return false;
         }
@@ -85,14 +85,14 @@ class KeyCommand extends BaseCommand{
                 $this->legendary = $this->cfg->get("Legendary");
 
                 $player->sendMessage(
-                    C::WHITE . "====>" . C::BLUE . "{$player->getName()}'s Crates" . C::WHITE . "<====" . "\n" . 
-                    C::GREEN . "Common " . C::YELLOW . $this->common . "\n" . 
-                    C::RED . "Vote " . C::YELLOW . $this->vote . "\n" . 
-                    C::GOLD . "Rare " . C::YELLOW . $this->rare . "\n" . 
-                    C::AQUA . "Legendary " . C::YELLOW . $this->legendary
+                    TextFormat::WHITE . "====>" . TextFormat::BLUE . "{$player->getName()}'s Crates" . C::WHITE . "<====" . "\n" . 
+                    TextFormat::GREEN . "Common: " . TextFormat::YELLOW . $this->common . "\n" . 
+                    TextFormat::RED . "Vote: " . TextFormat::YELLOW . $this->vote . "\n" . 
+                    TextFormat::GOLD . "Rare: " . TextFormat::YELLOW . $this->rare . "\n" . 
+                    TextFormat::AQUA . "Legendary: " . TextFormat::YELLOW . $this->legendary
                 );
             }else{
-                $sender->sendMessage(C::RED . "$args[0] player cannot be found.");
+                $sender->sendMessage(TextFormat::RED . "$args[0] player cannot be found.");
                 return false;
             }
         }
