@@ -35,6 +35,7 @@ class Configuration{
     private function registerConfig() : void{
         $this->main->saveResource("items.yml");
         $this->main->saveResource("config.yml");
+        $this->main->saveResource("lang/messages.yml");
         if(!is_dir($this->main->getDataFolder() . "players")) @mkdir($this->main->getDataFolder() . "players");
     }
 }

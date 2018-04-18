@@ -22,7 +22,9 @@ declare(strict_types=1);
 
 namespace CrateSystem\crates;
 
-use pocketmine\utils\Config;
+use pocketmine\Player;
+use pocketmine\item\Item;
+use pocketmine\utils\TextFormat;
 
 use CrateSystem\Main;
 
@@ -35,7 +37,138 @@ class CrateManager{
         $this->main = $main;
     }
 
-    public function getCfg() : Config{
-    	return new Config($this->main->getDataFolder() . "config.yml", Config::YAML);
+    /**
+     * @param Player $player
+     * @return void
+     */
+    public function Common(Player $player) : void{
+        $this->cfg = $this->getMain()->getPlayerCfg($player);
+        $message = $this->getMain()->getMsgCfg()->getNested("Crates.Common.Opened");
+        $nokey = $this->getMain()->getMsgCfg()->getNested("Crates.Common.No-Key");
+
+        if($this->cfg->get("Common") >= 1){
+
+            $itemscfg = $this->getMain()->getItemCfg()->getNested("common.items");
+            $randomitem = $itemscfg[array_rand($itemscfg)];
+            $values = explode(":", $randomitem);
+            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
+            $item->setCustomName($values[3]);
+
+            $message = str_replace("{name}", $item->getName(), $message);
+            $message = str_replace("{id}", $item->getId(), $message);
+            $message = str_replace("{damage}", $item->getDamage(), $message);
+            $message = str_replace("{amount}", $item->getCount(), $message);
+
+            $player->getInventory()->addItem($item);
+            $player->sendMessage($message);
+
+            $this->cfg->set("Common", $this->cfg->get("Common") - 1);
+            $this->cfg->save();
+        }else{
+            $player->sendMessage($nokey);
+        }
+    }
+
+    /**
+     * @param Player $player
+     * @return void
+     */
+    public function Vote(Player $player) : void{
+        $this->cfg = $this->getMain()->getPlayerCfg($player);
+        $message = $this->getMain()->getMsgCfg()->getNested("Crates.Vote.Opened");
+        $nokey = $this->getMain()->getMsgCfg()->getNested("Crates.Vote.No-Key");
+
+        if($this->cfg->get("Vote") >= 1){
+
+            $itemscfg = $this->getMain()->getItemCfg()->getNested("vote.items");
+            $randomitem = $itemscfg[array_rand($itemscfg)];
+            $values = explode(":", $randomitem);
+            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
+            $item->setCustomName($values[3]);
+
+            $message = str_replace("{name}", $item->getName(), $message);
+            $message = str_replace("{id}", $item->getId(), $message);
+            $message = str_replace("{damage}", $item->getDamage(), $message);
+            $message = str_replace("{amount}", $item->getCount(), $message);
+
+            $player->getInventory()->addItem($item);
+            $player->sendMessage($message);
+
+            $this->cfg->set("Vote", $this->cfg->get("Vote") - 1);
+            $this->cfg->save();
+        }else{
+            $player->sendMessage($nokey);
+        }
+    }
+
+
+    /**
+     * @param Player $player
+     * @return void
+     */
+    public function Rare(Player $player) : void{
+        $this->cfg = $this->getMain()->getPlayerCfg($player);
+        $message = $this->getMain()->getMsgCfg()->getNested("Crates.Rare.Opened");
+        $nokey = $this->getMain()->getMsgCfg()->getNested("Crates.Rare.No-Key");
+
+        if($this->cfg->get("Rare") >= 1){
+
+            $itemscfg = $this->getMain()->getItemCfg()->getNested("rare.items");
+            $randomitem = $itemscfg[array_rand($itemscfg)];
+            $values = explode(":", $randomitem);
+            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
+            $item->setCustomName($values[3]);
+
+            $message = str_replace("{name}", $item->getName(), $message);
+            $message = str_replace("{id}", $item->getId(), $message);
+            $message = str_replace("{damage}", $item->getDamage(), $message);
+            $message = str_replace("{amount}", $item->getCount(), $message);
+
+            $player->getInventory()->addItem($item);
+            $player->sendMessage($message);
+
+            $this->cfg->set("Rare", $this->cfg->get("Rare") - 1);
+            $this->cfg->save();
+        }else{
+            $player->sendMessage($nokey);
+        }
+    }
+
+
+    /**
+     * @param Player $player
+     * @return void
+     */
+    public function Legendary(Player $player) : void{
+        $this->cfg = $this->getMain()->getPlayerCfg($player);
+        $message = $this->getMain()->getMsgCfg()->getNested("Crates.Legendary.Opened");
+        $nokey = $this->getMain()->getMsgCfg()->getNested("Crates.Legendary.No-Key");
+
+        if($this->cfg->get("Legendary") >= 1){
+
+            $itemscfg = $this->getMain()->getItemCfg()->getNested("legendary.items");
+            $randomitem = $itemscfg[array_rand($itemscfg)];
+            $values = explode(":", $randomitem);
+            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
+            $item->setCustomName($values[3]);
+
+            $message = str_replace("{name}", $item->getName(), $message);
+            $message = str_replace("{id}", $item->getId(), $message);
+            $message = str_replace("{damage}", $item->getDamage(), $message);
+            $message = str_replace("{amount}", $item->getCount(), $message);
+
+            $player->getInventory()->addItem($item);
+            $player->sendMessage($message);
+
+            $this->cfg->set("Legendary", $this->cfg->get("Legendary") - 1);
+            $this->cfg->save();
+        }else{
+            $player->sendMessage($nokey);
+        }
+    }
+
+
+    public function getMain() : Main{
+        return $this->main;
     }
 }

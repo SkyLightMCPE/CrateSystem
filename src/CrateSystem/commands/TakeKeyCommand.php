@@ -82,7 +82,7 @@ class TakeKeyCommand extends BaseCommand{
         $player = $this->getServer()->getPlayerExact($args[0]);
         if(!$player instanceof Player){
             if($player instanceof ConsoleCommandSender){
-                $sender->sendMessage(TextFormat::RED . "Please provide a player.");
+                $sender->sendMessage(TextFormat::RED . "Please provide a player.");
                 return false;
             }
             $sender->sendMessage(TextFormat::RED . "$args[0] player cannot be found.");
@@ -93,7 +93,7 @@ class TakeKeyCommand extends BaseCommand{
             $this->cfg = $this->getMain()->getPlayerCfg($player);
             $this->cfg->set($args[1], $this->cfg->get($args[1]) - $args[2]);
             $this->cfg->save();
-            $sender->sendMessage(TextFormat::GREEN . "Successfully Removed {$player->getName()} $args[2] $args[1] Crate Key!");
+            $sender->sendMessage(TextFormat::GREEN . "Successfully Removed {$player->getName()} $args[2] $args[1] Crate Key!");
             $player->sendMessage(TextFormat::RED . "$args[2] $args[1] Crate key has been removed from your account!");
             $player->sendMessage(TextFormat::RED . "You now have " . $this->cfg->get($args[1]) . " $args[1] Key.");
         }else{

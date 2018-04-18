@@ -50,127 +50,53 @@ class UIManager{
      * @return void
      */
     public function crateUI(Player $player) : void{
+        $this->CrateManager = new CrateManager($this->getMain());
         $this->cfg = $this->getMain()->getPlayerCfg($player);
+
+        #UI Config
+        $title = $this->getMain()->getMsgCfg()->getNested("UI.Title");
+        $exit = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Exit");
+        $common = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Common");
+        $common = str_replace("{key}", $this->cfg->get("Common"), $common);
+        $vote = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Vote");
+        $vote = str_replace("{key}", $this->cfg->get("Vote"), $vote);
+        $rare = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Rare");
+        $rare = str_replace("{key}", $this->cfg->get("Rare"), $rare);
+        $legendary = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Legendary");
+        $legendary = str_replace("{key}", $this->cfg->get("Legendary"), $legendary);
+
         $formapi = $this->getMain()->getServer()->getPluginManager()->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $player, $data){
             if($data !== null) {
                 switch ($data) {
                     case 1:
-                        $this->Common($player);
+                        $this->CrateManager->Common($player);
                         return;
                     case 2:
-                        $this->Vote($player);
+                        $this->CrateManager->Vote($player);
                         return;
                     case 3:
-                        $this->Rare($player);
+                        $this->CrateManager->Rare($player);
                         return;
                     case 4:
-                        $this->Legendary($player);
+                        $this->CrateManager->Legendary($player);
                         return;
                 }
             }
         });
 
-        $form->setTitle(TextFormat::BLUE . "Crates List");
-        $form->addButton(TextFormat::WHITE . "Exit");
-        $form->addButton(TextFormat::GREEN . "Common " . TextFormat::GRAY . "- " . TextFormat::YELLOW . $this->cfg->get("Common"));
-        $form->addButton(TextFormat::RED . "Vote " . TextFormat::GRAY . "- " . TextFormat::YELLOW . $this->cfg->get("Vote"));
-        $form->addButton(TextFormat::GOLD . "Rare " . TextFormat::GRAY . "- " . TextFormat::YELLOW . $this->cfg->get("Rare"));
-        $form->addButton(TextFormat::AQUA . "Legendary " . TextFormat::GRAY . "- " . TextFormat::YELLOW . $this->cfg->get("Legendary"));
+        $form->setTitle($title);
+        $form->addButton($exit);
+        $form->addButton($common);
+        $form->addButton($vote);
+        $form->addButton($rare);
+        $form->addButton($legendary);
         $form->sendToPlayer($player);
     }
 
     /**
-     * @param Player $player
-     * @return void
+     * @return Main
      */
-    public function Common(Player $player) : void{
-        $this->cfg = $this->getMain()->getPlayerCfg($player);
-
-        if($this->cfg->get("Common") >= 1){
-
-            $itemscfg = $this->getMain()->getItemCfg()->getNested("common.items");
-            $randomitem = $itemscfg[array_rand($itemscfg)];
-            $values = explode(":", $randomitem);
-            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
-            $item->setCustomName($values[3]);
-
-            $player->getInventory()->addItem($item);
-            $message = TextFormat::GREEN . "You recivied " . $item->getName() . " (" . $item->getId() . ":" . $item->getDamage() . ") * " . $item->getCount() . " from Common Crate!";
-            $player->sendMessage($message);
-
-            $this->cfg->set("Common", $this->cfg->get("Common") - 1);
-            $this->cfg->save();
-        }else{
-            $player->sendMessage(TextFormat::RED . "You don't have any Common key.");
-        }
-    }
-
-    public function Vote(Player $player) : void{
-        $this->cfg = $this->getMain()->getPlayerCfg($player);
-
-        if($this->cfg->get("Vote") >= 1){
-
-            $itemscfg = $this->getMain()->getItemCfg()->getNested("vote.items");
-            $randomitem = $itemscfg[array_rand($itemscfg)];
-            $values = explode(":", $randomitem);
-            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
-            $item->setCustomName($values[3]);
-
-            $player->getInventory()->addItem($item);
-            $message = TextFormat::GREEN . "You recivied " . $item->getName() . " (" . $item->getId() . ":" . $item->getDamage() . ") * " . $item->getCount() . " from Vote Crate!";
-            $player->sendMessage($message);
-
-            $this->cfg->set("Vote", $this->cfg->get("Vote") - 1);
-            $this->cfg->save();
-        }else{
-            $player->sendMessage(TextFormat::RED . "You don't have any Vote key.");
-        }
-    }
-
-    public function Rare(Player $player) : void{
-        $this->cfg = $this->getMain()->getPlayerCfg($player);
-
-        if($this->cfg->get("Rare") >= 1){
-
-            $itemscfg = $this->getMain()->getItemCfg()->getNested("rare.items");
-            $randomitem = $itemscfg[array_rand($itemscfg)];
-            $values = explode(":", $randomitem);
-            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
-            $item->setCustomName($values[3]);
-
-            $player->getInventory()->addItem($item);
-            $message = TextFormat::GREEN . "You recivied " . $item->getName() . " (" . $item->getId() . ":" . $item->getDamage() . ") * " . $item->getCount() . " from Rare Crate!";
-            $player->sendMessage($message);
-
-            $this->cfg->set("Rare", $this->cfg->get("Rare") - 1);
-            $this->cfg->save();
-        }else{
-            $player->sendMessage(TextFormat::RED . "You don't have any Rare key.");
-        }
-    }
-
-    public function Legendary(Player $player) : void{
-        $this->cfg = $this->getMain()->getPlayerCfg($player);
-
-        if($this->cfg->get("Legendary") >= 1){
-
-            $itemscfg = $this->getMain()->getItemCfg()->getNested("legendary.items");
-            $randomitem = $itemscfg[array_rand($itemscfg)];
-            $values = explode(":", $randomitem);
-            $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
-            $item->setCustomName($values[3]);
-
-            $player->getInventory()->addItem($item);
-            $message = TextFormat::GREEN . "You recivied " . $item->getName() . " (" . $item->getId() . ":" . $item->getDamage() . ") * " . $item->getCount() . " from Legendary Crate!";
-            $player->sendMessage($message);
-
-            $this->cfg->set("Legendary", $this->cfg->get("Legendary") - 1);
-            $this->cfg->save();
-        }else{
-            $player->sendMessage(TextFormat::RED . "You don't have any Legendary key.");
-        }
-    }
 
     public function getMain() : Main{
         return $this->main;

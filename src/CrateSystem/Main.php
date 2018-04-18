@@ -72,6 +72,10 @@ class Main extends PluginBase{
         return new Config($this->getDataFolder() . "items.yml", Config::YAML);
     }
 
+    public function getMsgCfg() : Config{
+        return new Config($this->getDataFolder() . "lang/messages.yml", Config::YAML);
+    }
+
     public function getPlayer(Player $player) : string{
         return $this->getDataFolder() . "players" . DIRECTORY_SEPARATOR . strtolower($player->getName()) . ".yml";
     }
