@@ -7,13 +7,13 @@
 - [ ] Enchantments
 - [ ] Particle when opened crate
 - [ ] Sound when opened crate
+- [ ] Editable message
 
 * If you want other features please click [here](https://github.com/CLADevs/CrateSystem/issues/new) and tell us what you want!
 
 ## Features:
 
 - [x] Key System
-- [x] Editable Messages
 
 ## Depends:
  - [FormAPI](https://github.com/jojoe77777/FormAPI)
