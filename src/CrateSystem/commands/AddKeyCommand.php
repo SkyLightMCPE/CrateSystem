@@ -33,9 +33,9 @@ use CrateSystem\Main;
 
 class AddKeyCommand extends BaseCommand{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
-    /** @var Config */
+    /** @var Config $cfg */
     private $cfg;
 
     public function __construct(Main $main){

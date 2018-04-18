@@ -25,6 +25,7 @@ namespace CrateSystem\crates;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\item\Item;
+use jojoe77777\FormAPI\FormAPI;
 use pocketmine\utils\{
     Config, TextFormat
 };
@@ -36,19 +37,13 @@ class UIManager{
     private $main;
     /** @var Config $cfg */
     private $cfg;
+    /** @var CrateManager $CrateManager */
+    private $CrateManager;
 
-    /**
-     * UIManager constructor.
-     * @param Main $main
-     */
     public function __construct(Main $main){
         $this->main = $main;
     }
 
-    /**
-     * @param Player $player
-     * @return void
-     */
     public function crateUI(Player $player) : void{
         $this->CrateManager = new CrateManager($this->getMain());
         $this->cfg = $this->getMain()->getPlayerCfg($player);
@@ -65,10 +60,11 @@ class UIManager{
         $legendary = $this->getMain()->getMsgCfg()->getNested("UI.Buttons.Legendary");
         $legendary = str_replace("{key}", $this->cfg->get("Legendary"), $legendary);
 
+        /** @var FormAPI $formapi */
         $formapi = $this->getMain()->getServer()->getPluginManager()->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $player, $data){
-            if($data !== null) {
-                switch ($data) {
+            if($data !== null){
+                switch($data){
                     case 1:
                         $this->CrateManager->Common($player);
                         return;
@@ -93,10 +89,6 @@ class UIManager{
         $form->addButton($legendary);
         $form->sendToPlayer($player);
     }
-
-    /**
-     * @return Main
-     */
 
     public function getMain() : Main{
         return $this->main;

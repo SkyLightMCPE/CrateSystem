@@ -33,17 +33,13 @@ use CrateSystem\Main;
 
 class CrateCommand extends BaseCommand{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
-    /** @var UIManager */
+    /** @var UIManager $UIManager */
     private $UIManager;
-    /** @var Config */
+    /** @var Config $cfg */
     private $cfg;
 
-    /**
-     * CrateCommand constructor.
-     * @param Main $main
-     */
     public function __construct(Main $main){
         parent::__construct("crate", $main);
         $this->main = $main;

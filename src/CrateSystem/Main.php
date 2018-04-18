@@ -34,8 +34,10 @@ use CrateSystem\events\EventManager;
 
 class Main extends PluginBase{
 
-    /** @var CrateManager */
+    /** @var CrateManager $CrateManager */
     public $CrateManager;
+    /** @var $formapi */
+    public $formapi;
 
     public function onEnable() : void{
         if($this->checkDepends()) return;

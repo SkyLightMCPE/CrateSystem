@@ -31,14 +31,9 @@ use CrateSystem\Main;
 
 abstract class BaseCommand extends Command implements PluginIdentifiableCommand{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
 
-    /**
-     * BaseCommand constructor.
-     * @param string $name
-     * @param Main   $main
-     */
     public function __construct(string $name, Main $main){
         parent::__construct($name);
         $this->main = $main;

@@ -30,7 +30,7 @@ use CrateSystem\Main;
 
 class JoinEventListener implements Listener{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
 
     public function __construct(Main $main){

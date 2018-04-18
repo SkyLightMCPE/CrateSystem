@@ -33,10 +33,18 @@ use CrateSystem\Main;
 
 class KeyCommand extends BaseCommand{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
-    /** @var Config */
+    /** @var Config $cfg */
     private $cfg;
+    /** @var $common */
+    private $common;
+    /** @var $vote */
+    private $vote;
+    /** @var $rare */
+    private $rare;
+    /** @var $legendary */
+    private $legendary;
 
     public function __construct(Main $main){
         parent::__construct("key", $main);
@@ -64,10 +72,10 @@ class KeyCommand extends BaseCommand{
             $this->legendary = $this->cfg->get("Legendary");
 
             $sender->sendMessage(
-                TextFormat::WHITE . "====>" . TextFormat::BLUE . "Your Crates" . TextFormat::WHITE . "<====" . "\n" . 
-                TextFormat::GREEN . "Common " . TextFormat::YELLOW . $this->common . "\n" . 
-                TextFormat::RED . "Vote " . TextFormat::YELLOW . $this->vote . "\n" . 
-                TextFormat::GOLD . "Rare " . TextFormat::YELLOW . $this->rare . "\n" . 
+                TextFormat::WHITE . "====>" . TextFormat::BLUE . "Your Crates" . TextFormat::WHITE . "<====" . "\n" .
+                TextFormat::GREEN . "Common " . TextFormat::YELLOW . $this->common . "\n" .
+                TextFormat::RED . "Vote " . TextFormat::YELLOW . $this->vote . "\n" .
+                TextFormat::GOLD . "Rare " . TextFormat::YELLOW . $this->rare . "\n" .
                 TextFormat::AQUA . "Legendary " . TextFormat::YELLOW . $this->legendary
             );
             return false;
@@ -85,10 +93,10 @@ class KeyCommand extends BaseCommand{
                 $this->legendary = $this->cfg->get("Legendary");
 
                 $player->sendMessage(
-                    TextFormat::WHITE . "====>" . TextFormat::BLUE . "{$player->getName()}'s Crates" . C::WHITE . "<====" . "\n" . 
-                    TextFormat::GREEN . "Common: " . TextFormat::YELLOW . $this->common . "\n" . 
-                    TextFormat::RED . "Vote: " . TextFormat::YELLOW . $this->vote . "\n" . 
-                    TextFormat::GOLD . "Rare: " . TextFormat::YELLOW . $this->rare . "\n" . 
+                    TextFormat::WHITE . "====>" . TextFormat::BLUE . "{$player->getName()}'s Crates" . C::WHITE . "<====" . "\n" .
+                    TextFormat::GREEN . "Common: " . TextFormat::YELLOW . $this->common . "\n" .
+                    TextFormat::RED . "Vote: " . TextFormat::YELLOW . $this->vote . "\n" .
+                    TextFormat::GOLD . "Rare: " . TextFormat::YELLOW . $this->rare . "\n" .
                     TextFormat::AQUA . "Legendary: " . TextFormat::YELLOW . $this->legendary
                 );
             }else{

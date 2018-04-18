@@ -24,7 +24,7 @@ namespace CrateSystem;
 
 class Configuration{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
 
     public function __construct(Main $main){

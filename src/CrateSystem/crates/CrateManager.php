@@ -24,23 +24,22 @@ namespace CrateSystem\crates;
 
 use pocketmine\Player;
 use pocketmine\item\Item;
+use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
 use CrateSystem\Main;
 
 class CrateManager{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
+    /** @var Config $cfg */
+    private $cfg;
 
     public function __construct(Main $main){
         $this->main = $main;
     }
 
-    /**
-     * @param Player $player
-     * @return void
-     */
     public function Common(Player $player) : void{
         $this->cfg = $this->getMain()->getPlayerCfg($player);
         $message = $this->getMain()->getMsgCfg()->getNested("Crates.Common.Opened");
@@ -69,10 +68,6 @@ class CrateManager{
         }
     }
 
-    /**
-     * @param Player $player
-     * @return void
-     */
     public function Vote(Player $player) : void{
         $this->cfg = $this->getMain()->getPlayerCfg($player);
         $message = $this->getMain()->getMsgCfg()->getNested("Crates.Vote.Opened");
@@ -101,11 +96,6 @@ class CrateManager{
         }
     }
 
-
-    /**
-     * @param Player $player
-     * @return void
-     */
     public function Rare(Player $player) : void{
         $this->cfg = $this->getMain()->getPlayerCfg($player);
         $message = $this->getMain()->getMsgCfg()->getNested("Crates.Rare.Opened");
@@ -134,11 +124,6 @@ class CrateManager{
         }
     }
 
-
-    /**
-     * @param Player $player
-     * @return void
-     */
     public function Legendary(Player $player) : void{
         $this->cfg = $this->getMain()->getPlayerCfg($player);
         $message = $this->getMain()->getMsgCfg()->getNested("Crates.Legendary.Opened");

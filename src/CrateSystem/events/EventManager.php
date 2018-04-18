@@ -26,7 +26,7 @@ use CrateSystem\Main;
 
 class EventManager{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
 
     public function __construct(Main $main){

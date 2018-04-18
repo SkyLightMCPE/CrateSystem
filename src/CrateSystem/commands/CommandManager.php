@@ -26,13 +26,9 @@ use CrateSystem\Main;
 
 class CommandManager{
 
-    /** @var Main */
+    /** @var Main $main */
     private $main;
 
-    /**
-     * CommandManager constructor.
-     * @param Main $main
-     */
     public function __construct(Main $main){
         $this->main = $main;
         $this->registerCommands();
