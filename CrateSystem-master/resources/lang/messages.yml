@@ -1,0 +1,28 @@
+---
+#Color Code: §
+
+#UI /crate
+UI:
+  Title: "§9Crates List"
+  Buttons:
+    Exit: "§fExit"
+    Common: "§aCommon §7- §e{key}"
+    Vote: "§cVote §7- §e{key}"
+    Rare: "§6Rare §7- §e{key}"
+    Legendary: "§bLegendary §7- §e{key}"
+
+#Crate Message
+Crates:
+  Common:
+    Opened: "§aYou recivied {name} ({id}:{damage}) * {amount} from Common Crate!"
+    No-Key: "§cYou don't have any Common key."
+  Vote:
+    Opened: "§aYou recivied {name} ({id}:{damage}) * {amount} from Vote Crate!"
+    No-Key: "§cYou don't have any Vote key."
+  Rare:
+    Opened: "§aYou recivied {name} ({id}:{damage}) * {amount} from Rare Crate!"
+    No-Key: "§cYou don't have any Rare key."
+  Legendary:
+    Opened: "§aYou recivied {name} ({id}:{damage}) * {amount} from Legendary Crate!"
+    No-Key: "§cYou don't have any Legendary key."
+...
