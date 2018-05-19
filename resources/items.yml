@@ -3,21 +3,21 @@
 # "id:damage:amount:name"
 common:
   items:
-    - "1:1:1:Common"
+    - "1:1:1:default"
     - "2:2:2:Common"
 
 vote:
   items:
-    - "1:1:1:Vote"
+    - "1:1:1"
     - "2:2:2:Vote"
 
 rare:
   items:
-    - "1:1:1:Rare"
+    - "1:1:1"
     - "2:2:2:Rare"
 
 legendary:
   items:
-    - "1:1:1:Legendary"
+    - "1:1:1"
     - "2:2:2:Legendary"
 ...

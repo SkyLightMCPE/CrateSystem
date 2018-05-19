@@ -54,7 +54,7 @@ class AddKeyCommand extends BaseCommand{
         $usage = "Usage: /addkey <player> <key> <amount>";
 
         if(!$sender->hasPermission("cratesystem.key")){
-            $sender->sendMessage(new TranslationContainer(C::RED . "%commands.generic.permission"));
+            $sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.generic.permission"));
             return false;
         }
 

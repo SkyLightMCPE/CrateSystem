@@ -22,19 +22,33 @@ declare(strict_types=1);
 
 namespace CrateSystem\events;
 
+use pocketmine\Player;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\item\Item;
+use pocketmine\utils\Config;
 use CrateSystem\Main;
 
-class EventManager{
+class CrateEvent implements Listener{
 
     /** @var Main $main */
     private $main;
 
     public function __construct(Main $main){
         $this->main = $main;
-        $this->registerEvents();
+        $main->getServer()->getPluginManager()->registerEvents($this, $main);
     }
 
-    private function registerEvents() : void{
-        new CrateEvent($this->main);
+    public function onJoin(PlayerJoinEvent $event) : void{
+        $player = $event->getPlayer();
+        if(!file_exists($this->main->getPlayer($player))){
+            $this->main->regPlayer($player);
+        }
+    }
+
+    public function onBreak(BlockBreakEvent $event) : void{
+        $player = $event->getPlayer();
+        $block = $event->getBlock();
     }
 }

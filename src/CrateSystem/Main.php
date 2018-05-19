@@ -59,7 +59,18 @@ class Main extends PluginBase{
         if(is_null($this->formapi)){
             $this->getLogger()->error("Please install FormAPI Plugin.");
             $this->getPluginLoader()->disablePlugin($this);
+            return true;
         }
+        return false;
+    }
+
+    public function regPlayer(Player $player) : void{
+        new Config($this->getPlayer($player), Config::YAML, [
+            "Common" => 0,
+            "Vote" => 0,
+            "Rare" => 0,
+            "Legendary" => 0
+        ]);
     }
 
     public function getCfg() : Config{

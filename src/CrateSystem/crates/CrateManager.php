@@ -46,12 +46,11 @@ class CrateManager{
         $nokey = $this->getMain()->getMsgCfg()->getNested("Crates.Common.No-Key");
 
         if($this->cfg->get("Common") >= 1){
-
             $itemscfg = $this->getMain()->getItemCfg()->getNested("common.items");
             $randomitem = $itemscfg[array_rand($itemscfg)];
             $values = explode(":", $randomitem);
             $item = Item::get(intval($values[0]), intval($values[1]), intval($values[2]));
-            $item->setCustomName($values[3]);
+            if(isset($values[3])) $item->setCustomName($values[3]);
 
             $message = str_replace("{name}", $item->getName(), $message);
             $message = str_replace("{id}", $item->getId(), $message);
